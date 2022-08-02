@@ -1,0 +1,85 @@
+## 국비교육 84일차
+
+#### 리눅스 찾기참조 명령어
+
+> ```
+> find
+>   -name : (파일 이름이 뭔지)
+>   -user : (소유주가 누구인지)
+>   -perm [int]: 권한이 [int]인 대상을 찾아줘
+>   -type [d/f]: 타입 확인
+>   -size [int]: 양수일 때 +
+>   ex) find -name sample -type f
+>   ex) sudo find /etc/ -name "*.conf"
+>    
+> grep ["찾을 문자열"] 경로 : 
+>   cf) find -name "sample" -type f, grep -nv "jeju" /home/vagrant/grepTEST/sample
+>   -A[number] : 찾을 문자열 행 뒤의 [number] 줄 만큼 출력
+>   -B[number] : 찾을 문자열 행 앞의 [number] 줄 만큼 출력
+>   -r : 하위 디렉토리를 포함한 모든 파일에서 검색(중요!)
+>   -n : 포함된 행의 번호를 함께 출력
+>   -v : 일치하지 않는 행만 출력
+>   -E : 찾을 패턴을 정규 표현식으로 찾음
+>   -i : 대소문자를 구별하지 않음
+>   -l : 패턴이 포함된 파일의 이름을 출력
+>   cf) find /home/ -name services | grep -nr -B10 "file"
+>
+> [order1] | [order2] : [order1] 이 끝나고 나서 순차적으로 [order2] 진행 
+>   cf) [order1] && [order2] : [order1]과 [order2] 동시 진행
+>
+> touch [file_name] : 파일 작성
+>   ex) cd TEST_D3 && touch sample
+>   cf) vi [file_name] : 내용을 입력하면서 작성
+> ```
+
+#### 리눅스 사용 팁
+
+> ``` 
+> 리눅스는 트리형 구조, 그래서 경로를 정확히 아는 것이 중요함!
+>   cf. 트리형 구조란? 디렉토리 밑에 디렉토리..그밑에 디렉토리..
+> [order] --help : 해당 명령에 할당된 옵션에 대한 설명을 제공
+> path : 경로
+> ```
+
+##### 실전문제
+
+> ```
+> Q1. DB라는 유저를 추가하고 비밀번호를 1234 로 변경하십시오.
+> A: useradd DB, passwd DB, 1234
+>
+> Q2. DB라는 유저로 변경후 /home 으로 이동후 경로를 출력하십시오
+> A: su DB, cd /home, pwd
+>
+> Q3. 최상위 위치로 돌아간뒤 /home/DB sample라는 폴더를 만들고 속성(권한)값을 rw-rw-r-- 으로 변경하시오.
+> A: cd ~, mkdir /home/DB/sample, chmod 664 sample
+>
+> Q4. 그룹 naver 를 만들고  유저  developer1,developer2 를 추가하시오.
+> A: groupadd naver, gpasswd -a developer1 naver, gpasswd -a developer2 naver
+>
+> Q5. developer1 유저로 속성(권한)값이 r--rw-r-x 인 test 폴더를 만들고(최상위 위치에) 그룹을 naver로 변경하시오.
+> A: su develop1, mkdir test, chmod 465 test, sudo su -, cd /home/develop1, chown develop1:naver test or chgrp naver test
+>
+> Q6. 폴더를 지우고 싶은데 삭제가 안된다. 그이유는? (사용한 명령어는 rmdir 이였다.)
+> A: 1. 폴더가 비어있지 않다, 2. 권한이 없다 -> rm-rf [폴더명] 
+> 
+> Q7. pwd 명령어를 실행하니 현재 위치가 ~ 였다 /home/DB/sample의 data 파일의 행번호를 붙여서 출력하는 명령어는?
+> A: vi data, cat -n /home/DB/sample/data , wc -l /home/DB/sample/data
+>
+> Q8.현재 디렉터리에 있는 파일명의 확장자가 java인 모든파일을 /tmp로 복사하시오.
+> A: cp *.java /tmp/
+>
+> ```
+
+
+#### 리눅스 연습이 필요한 cmd 모음 
+
+> ```
+> chgrp [그룹명] [폴더명] :
+> ls 디렉토리 간략 보기
+> ls -al : 전부 보이기 
+> wc -l /etc/  파일 줄수 확인
+> cp /etc/yum.conf yum.conf 복사 [파일명1] [파일명2] : [파일명1]을 [파일명2]로 복사
+>   ex) cp services TEST_D1/service_COPY
+mkdir 디렉토리 만들기
+>   ex) cp hansol ../TEST_D1/hansol_COPY // 위로 올라갈 때는 반드시 "../" 자주 실수함! 
+> ```
