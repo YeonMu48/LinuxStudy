@@ -1,0 +1,115 @@
+## 국비교육 85일차
+
+#### 남은 진도 
+
+> ```
+> 패키지관리
+> apche
+> tomcat
+> aoache & tomcat 연동 + war파일 배포
+> mysql 설치
+> ```
+
+- - -
+#### 압축 / 해제 관련 명령어
+
+> ```
+> gzip [option] [file_name] [file_name2] ... : 사진이나 용량큰거, 기존에 있는 파일이 없어지고 압축파일이 새로 생성
+>   -d : 압축해제
+>   ex) gzip -d ./f* : f로 시작하는 파일 전체 해제 
+>   -n : 1~9, 1이 가장 빠르지만 압축률이 낮다
+>   -c : 압축된 파일 내용을 출력하고 원본파일은 그대로
+>   -f : 사용 중인 파일도 강제로 압축
+>   -l : 압축된 파일의 정보 출력
+>   -t : 압축 파일 테스트 (압축이 풀리진 않음)
+>   -v : 압축 or 압축 해제 할 때 자세한 정보 출력
+>   -h : 도움말 호출
+>   -v : 버전 정보 출력
+> - - -
+>   
+> bzip2 [option] [file_name]
+>
+> xz [option] [file_name] 
+>   * 자주사용하는 옵션
+>   -k : 기존의 파일을 유지하면서 압축파일을 새로 생성
+>   -l : 압축된 파일의 정보 출력
+>
+> zip [file_name] : 압축해제
+>   ex) sudo yum install zip-y
+> unzip [file_name]
+>   ex) sudo yum install unzip-y
+> ```
+
+#### tar 명령어 정리
+
+> ```
+> tar
+>   : tar는 Tape ARchiver의 약자로 엄밀히 말하면 압축방식은 아닌, 일종의 묶음 형태이다. tar파일은 리눅스 및 유닉스에서 가장 많이 사용되는 형태로 tar로 묶이기 전 file들의 속성과 directory 구조등을 모두 보존할 수 있고 압축과 압축 해제 등의 작업을 거치면서 파일이 변경 또는 훼손 될 염려가 없기 때문에 소스 배포 파일을 만드는 용도로 자주 사용한다. 
+>   -f : 대상 tar 아카이브 지정.(기본 옵션)
+>   -c : tar 아카이브 생성(압축). 기존 아카이브 덮어쓰기)
+>   -x : tar 아카이브에서 파일 추출(압축 해제)
+>   -v : 처리되는 과정(파일 정보)을 상세히 보여줌
+>   -z : gzip 압축 적용 옵션
+>   -j : bzip2 압축 적용 옵션
+>   -k : tar 아카이브 추출 시(압축 시), 기존 파일 유지
+>   -U : tar 아카이브 추출 전(압축 전), 기존 파일 삭제
+>   -C : 대상 디렉토리 경로 지정
+>   -w : 모든 진행 과정에 대한 확인 요청. (interactive)
+>   -e : 첫 번째 에러 발생시 중지
+> ```
+
+#### tar 주요 사용법
+
+> ```
+> Q. 대상 directory를 포함한 모든 파일과 디렉토리를 tar로 묶기 
+> A. tar -cvf test.tar [path]
+> 
+> Q. 파일을 지정하여 tar 아카이브로 묶기
+> A. tar -cvf [file_name1] [file_name2]
+>
+> Q. tar 아카이브를 현재 directory에 풀기
+> A. tar -xvf test.tar
+>
+> Q. tar 아카이브를 지정된 directory에 풀기
+> A. tar -xvf test.tar -C [path]
+>
+> Q. tar 아카이브의 내용 확인하기 
+> A. tar -tvf test.tar
+>
+> Q. gzip으로 압축된 tar 아카이브를 현재 directory에 풀기
+> A. tar -zxvf test.tar.gz
+>
+> Q. bzip2로 압축된 tar 아카이브를 현재 directory에 풀기
+> A. tar -jxvf test.tar.bz2 
+>
+> Q. 현재 directory를 tar로 묶고 gzip으로 압축하기 
+> A. tar -zcvf test.tar.gz *
+>
+> Q. 현재 directory를 tar로 묶고 bzip2로 압축하기 
+> A. tar -jcvf test.tar.bz2 *
+>
+> Q. tar 아카이브로 묶거나 풀 때 파일 별로 진행 여부 확인하기 
+> A. tar -cvfw or -xvfw test.tar
+>
+> Q. 현재 directory의 모든 파일과 디렉토리를 [특정 이름]의 tar로 묶기 
+> A. tar -cvf [name].tar*
+>
+> ```
+
+#### 리눅스 패키지 관리 명령어
+
+>```
+> yum [option]
+>   -install
+>   -remove
+>   -check-update
+>   -update
+>   -list
+>```
+
+#### 알아두면 좋을 내용 
+> ```
+> 리눅스 마스터 2급
+> alias ll2='ls -Alh' 명령어 만드는 명령어
+> wget http://ftp.exim.org/pub/pcre/pcre-8.38.tar.gz
+> ```
