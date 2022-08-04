@@ -1,0 +1,87 @@
+## 국비교육 86일차
+
+#### 남은 진도 
+
+> ```
+> tomcat
+> aoache & tomcat 연동 + war파일 배포
+> mysql 설치
+> ```
+
+- - -
+#### rpm 
+
+> ```
+> rpm
+>  : red hat 계열의 리눅스에서 패키지를 설치하는 데 사용하는 명령
+>   윈도우에서 .exe 확장자로 프로그램을 설치하듯이 마찬가지로 리눅스에서는 .rpm 확장자를 가진 설치 파일로 패키지를 설치한다.
+>   yum은 rpm의 상위호환, 왜? rpm 패키지 간의 의존성을 주의하여야 하지만 yum은 자체적으로 해결해주기 때문
+>   그렇다면 yum이 만능인가? 그렇진 않음, 버전이 업데이트 될 때마다 자동적으로 올라오지 않기 때문
+>   -ivh [패키지명] : 이전 버전 삭제안하고 새로운 버전 설치
+>   -Fvh [패키지명] : 패키지 업데이트 
+>   -Uvh [패키지명] : 설치 및 업데이트(주로 사용)
+>   --nodeps : 의존성 무시하고 설치 옵션
+>   --force : 패키지 충돌이 발생해서 강제 설치 옵션
+>
+> 어떤 것을 설치하고 싶다면 http://mirror.centos.org/centos-7/7/os/x86_64/Packages/ 에 접속해서 필요한 패키지를 받을 수 있음
+> 설치 방법 : wget [복사한 링크]
+>
+> ```
+
+#### OpenSSL 설치방법
+
+> ```
+> openssl은 암호화 해주는 라이브러리이다.
+> 설치 방법은 아래와 같다. 
+> 1. yum install wet -y
+> 2. yum install perl gcc -y
+> 3. cd /usr/local/src
+> 4. wget [OpenSSL 다운로드 링크]
+>   4-1) https://www.openssl.org/source/ 들어가서 최신버전
+> 5. tar -xvzf [OpenSSL 다운로드 링크]
+> 6. cd openssl ~
+> 7. ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared
+> 8. make && make install
+>   cf) make : 소스파일 컴파일
+>   cf) make install : 컴파일한 소스파일 설치
+> 9. vim /etc/ld.so.conf.d/openssl-1.1.1q.conf 
+>   9-1) i 누르고 /usr/local/ssl/lib 입력 // path 입력
+> 10. cd /etc/ld.so.conf.d/
+> 11. ln -s /usr/local/ssl/lib/libssl.so.1.1 /usr/lib64/libssl.so.1.1
+> 12. ln -s /usr/local/ssl/lib/libcrypto.so.1.1 /usr/lib64/libcrypto.so.1.1
+> 13. mv /usr/bin/openssl /usr/bin/openssl1.0.2
+> 14. ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl
+> 15. openssl version
+> 
+> ** 지금은 잘 되도 나중엔 안 될 수 있다. 왜? 버전이 계속 업데이트 되기 때문... 그러니 프로세스를 이해하는 것 자체가 중요함
+>
+> ```
+
+#### 필수 설치 
+
+> ```
+> yum install gcc-c++ -y
+> yum install expat-devel -y
+> ```
+
+#### pcre 설치
+
+> ```
+> 1. mkdir -p /usr/local/src/apache
+> 2. cd /usr/local/src/apache
+> 3. wget http://ftp.cs.stanford.edu/pub/exim/pcre/pcre-8.45.tar.gz --no-check
+> 4. tar -xvzf pcre-8.45.tar.gz
+> 5. cd pcre-8.45/
+> 6. ./configure
+> 7. make && make install 
+> 8.
+
+#### 리눅스 cmd 명령어
+
+> ```
+> vagrant init -> 설정 파일을 만들겠다
+> vagrant up -> 리눅스 서버 키겠다(실행 중인지 확인하는 방법은 vm이 돌아가는 걸 보면 됨)
+> vagrant ssh -> 쉘로 들어가겠다 
+> vagrant halt -> 끌 때
+> vagrant reload -> 재시작
+> ```
