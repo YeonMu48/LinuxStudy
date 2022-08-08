@@ -1,0 +1,79 @@
+## 국비교육 87일차 월요일
+
+#### 남은 진도 
+
+> ```
+> java 설치
+> tomcat
+> aoache & tomcat 연동 + war파일 배포
+> mysql 설치
+> ```
+
+- - -
+#### java 설치
+> ```
+> 1. yum install -y java-1.8.0-openjdk
+> 2. yum install -y java-1.8.0-openjdk-devel
+> 3. readlink -f /usr/bin/java
+> 4. 3의 경로를 복사해서 입력
+> 5. vi /etc/profile
+> 6. 환경변수 설정
+>   6-1) JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.342.b07-1.el7_9.x86_64
+> PATH=$PATH:$JAVA_HOME/bin
+> CLASSPATH=$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar
+> 
+> export JAVA_HOME PATH CLASSPATH
+> 7. source /etc/profile
+> ``` 
+
+#### tomcat 설치
+
+> ```
+> tomcat이란?
+>   웹 어플리케이션 서버(WAS) (cf. apache : 웹 서버, 정적 자원(html)들을 할당받음), 동적 자원(java or db정보 등)을 컴파일하여 화면으로 전송
+> 1. cd /usr/local/download 
+> 2. 없으면 /usr/local 가서 mkdir download
+> 3. http://archive.apache.org/dist/ 가서 tomcat - tomcat8 - 8.5.27 - bin - http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.27/bin/apache-tomcat-8.5.27.tar.gz 링크 복사
+> 4. 압축해제 tar -xvzf apache-tomcat-8.5.27.tar.gz
+> 5. mv apache-tomcat-8.5.27 /usr/local/tomcat8
+> 6. cd ../ 
+> 7. cd tomcat8
+> 8. vi conf/server.xml
+> 9. 71 번째 행의 redirecPort="8443" 뒤에 URIEncoding="UTF-8" 추가
+> 10. vi /etc/profile (톰캣의 환경변수 수정)
+>   10-1) JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.342.b07-1.el7_9.x86_64
+> CATALINA_HOME=/usr/local/tomcat8
+>
+> PATH=$PATH:$JAVA_HOME/bin:/bin:/sbin
+> CLASSPATH=$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar:$CATALINA_HOME/lib-jsp-api.jar:$CATALINA_HOME/lib/servlet-api.jar
+>
+> export JAVA_HOME PATH CLASSPATH CATALINA_HOME 으로 수정
+>   10-2) 환경변수 추가할 때 : 를 사용 
+> 11. 환경변수 적용 
+>   11-1) source /etc/procfile
+> 12. cd /usr/local/tomcat8/bin
+> 13. tomcat 실행 
+>   13-1) /usr/local/tomcat8/bin/startup.sh
+> 14. ps -ef | grep tomcat8
+> 15. yum install net-tools -y
+> 16. netstat -tln 
+> 17. wget http://localhost:8080/
+> 18. Systmemctl 환경변수 등록
+>   18-1)
+> 19. systemctl daemon-reload
+> 20. systemctl enable tomcat8
+> 21. systemctl start httpd
+> 22. systemctl start tomcat8
+> 23. systemctl status tomcat8
+> 24. HTTP에 HOST주소와 :8080을 붙여서 확인
+>   ex) 192.168.8.88:8080 
+>       - 이 때 고양이가 있는 아파치 톰겟 웹 페이지가 나오면 정상 구동
+>       - 비정상 구동시 systmectl status tomcat8 시 빨갛게 에러 표시
+> ** 80포트가 없을 시 추가해야 함
+>   1) vi /etc/firewalld/zones/public.xml
+>   2) firewall-cmd --permanent --zone=public --add-port=8080/tcp   // 숫자엔 추가할 포트 작성
+>   3) firewall-cmd --state 로 구동 확인   
+>   4) firewall-cmd --get-active-zones
+>   5) firewall-cmd --reload
+>   6) firewall-cmd --list-ports
+> ```
